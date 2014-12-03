@@ -11,9 +11,9 @@ public class Sahira extends Assassin
 		
 	}
 	
-	public void finalStrike()
+	public void superChecker()
 	{
-		System.out.println("Sahira uses her knowledge of her foes body to immediately lower their health to zero.");
+		super.superChecker();
 	}
 
 }

@@ -12,10 +12,12 @@ public class fighterRunner
 		
 		for (int i = 0; i < fighter.length; i++)
 			{	
+			fighter[i].identity();
 			fighter[i].fight();
 			fighter[i].counter();
 			fighter[i].ability();
 			fighter[i].myFinisher.finalStrike();
+			fighter[i].superChecker();
 			System.out.println();
 			}
 		}

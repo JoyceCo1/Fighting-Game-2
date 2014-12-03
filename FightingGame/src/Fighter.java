@@ -19,4 +19,11 @@ public abstract class Fighter {
 	}
 	
 	public abstract void ability();
+	
+	public void superChecker()
+	{
+		System.out.println("The assassins used the super method");
+	}
+	
+	public abstract void identity();
 }
