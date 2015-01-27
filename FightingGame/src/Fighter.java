@@ -1,10 +1,7 @@
 
 public abstract class Fighter {
-	protected int Health;
-	protected int Damage;
 	protected int Ability;
 	protected int Counter;
-	protected String Name;
 	protected finisher myFinisher;
 
 	
@@ -26,4 +23,6 @@ public abstract class Fighter {
 	}
 	
 	public abstract void identity();
+	
+	public abstract void name();
 }
