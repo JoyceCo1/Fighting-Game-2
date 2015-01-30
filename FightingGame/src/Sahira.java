@@ -15,5 +15,10 @@ public class Sahira extends Assassin
 	{
 		super.superChecker();
 	}
+	
+	public void name()
+		{
+		System.out.println("This fighter's name is Sahira");
+		}
 
 }

@@ -1,11 +1,13 @@
 import java.util.*;
 public class fighterRunner
 	{
+	static Fighter player = characterChoice();
 	static Fighter [] fighter = new Fighter [6];
 	public static void main(String[] args)
 		{
 		characterFill();
 		characterChoice();
+		System.out.println(player.getName());
 		}
 	
 	
@@ -19,8 +21,9 @@ public class fighterRunner
 		fighter[5] = new Auriel();
 		}
 	
-	public static void characterChoice()
+	public static Fighter characterChoice()
 		{
+		Fighter player = new Sahira();
 		Scanner input = new Scanner(System.in);
 		System.out.println("Which fighter would you like?");
 		System.out.println("(1) Sahira   - an Assassin");
@@ -40,22 +43,56 @@ public class fighterRunner
 		fighter[choice - 1].fight();
 		fighter[choice - 1].counter();
 		fighter[choice - 1].ability();
-		fighter[choice - 1].myFinisher.finalStrike();
 		System.out.println("Are you sure you want to play as this fighter?");
 		System.out.print("Y or N");
 		String yesOrNo = input.next();
-		if(yesOrNo.equals("N"));
+		if(yesOrNo.equals("N"))
 			{
 			characterChoice();
 			}
 		if(yesOrNo.equals("Y"))
 			{
-			fillPlayer1();
+			int playerCheck = choice - 1;
+			switch(playerCheck)
+				{
+				case 1: 
+					{
+					player = new Sahira();
+					break;
+					}
+				case 2: 
+					{
+					player = new Lucaror();
+					break;
+					}
+				case 3: 
+					{
+					player = new Bruce();
+					break;
+					}
+				case 4: 
+					{
+					player = new Golomech();
+					break;
+					}
+				case 5: 
+					{
+					player = new Shyra();
+					break;
+					}
+				case 6: 
+					{
+					player = new Auriel();
+					break;
+					}
+				}
 			}
 		else
 			{
-			System.out.println("Please enter Y or N.");
+			System.out.println("Please select a character");
+			characterChoice();
 			}
+		return player;
 		}
 	
 	public static void fillPlayer1()

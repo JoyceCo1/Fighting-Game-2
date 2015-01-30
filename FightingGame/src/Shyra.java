@@ -1,13 +1,14 @@
 
 public class Shyra extends Bruiser
 {
-	String Name = "Shyra";
-	int attack = 100;
-	int health = 350;
-	
+
 	public Shyra()
 	{
-		myFinisher = (finisher) new yesFinisher();
+	Name = "Shyra";
+	attack = 100;
+	health = 350;
+	
+	
 	}
 	public void ability()
 	{
@@ -18,5 +19,6 @@ public class Shyra extends Bruiser
 		{
 		System.out.println("This character's name is Shyra");
 		}
+
 
 }

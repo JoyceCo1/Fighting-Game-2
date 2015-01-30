@@ -9,5 +9,9 @@ public class Lucaror extends Assassin
 	{
 		System.out.println("Lucaror's mastery of stealth allows him to get next to a target and prevent them from using casts");
 	}
+	public void name()
+		{
+		System.out.println("This fighter's name is Lucaror");
+		}
 
 }
