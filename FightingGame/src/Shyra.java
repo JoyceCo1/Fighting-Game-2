@@ -19,6 +19,16 @@ public class Shyra extends Bruiser
 		{
 		System.out.println("This character's name is Shyra");
 		}
+	
+	public static void fill()
+		{
+		characterData.character.add(new characterData ("Shyra", 100, 350, true, 4));
+		}
+	
+	public void attack()
+		{
+		System.out.println("This character's attack is " + 100);
+		}
 
 
 }

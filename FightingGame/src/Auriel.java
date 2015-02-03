@@ -15,5 +15,16 @@ public class Auriel extends Bruiser
 		System.out.println("This fighter's name is Auriel");
 		}
 	
+	public static void fill()
+		{
+		characterData.character.add(new characterData ("Auriel", 100, 350, true, 5));
+		}
+	
+	public void attack()
+		{
+		System.out.println("This character's attack is " + 100);
+		}
+	
+	
 
 }

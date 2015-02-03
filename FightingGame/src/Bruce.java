@@ -14,5 +14,16 @@ public class Bruce extends Tank
 		{
 		System.out.println("This fighter's name is Bruce");
 		}
+	
+	public static void fill()
+		{
+		characterData.character.add(new characterData ("Bruce", 50, 500, true, 2));
+		}
+	
+	public void attack()
+		{
+		System.out.println("This character's attack is " + 50);
+		}
+	
 
 }
