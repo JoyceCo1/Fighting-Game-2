@@ -23,7 +23,7 @@ public class Sahira extends Assassin
 	
 	public static void fill()
 		{
-		characterData.character.add(new characterData ("Sahira", 200, 250, true, 0));
+		characterData.character.add(new characterData ("Sahira", 200, 250, true, 0, false));
 		}
 	
 	public void attack()

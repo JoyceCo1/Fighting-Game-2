@@ -22,7 +22,7 @@ public class Shyra extends Bruiser
 	
 	public static void fill()
 		{
-		characterData.character.add(new characterData ("Shyra", 100, 350, true, 4));
+		characterData.character.add(new characterData ("Shyra", 100, 350, true, 4, false));
 		}
 	
 	public void attack()

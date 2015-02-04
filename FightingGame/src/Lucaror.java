@@ -16,7 +16,7 @@ public class Lucaror extends Assassin
 	
 	public static void fill()
 		{
-		characterData.character.add(new characterData ("Lucaror", 200, 250, true, 1));
+		characterData.character.add(new characterData ("Lucaror", 200, 250, true, 1, false));
 		}
 	
 	public void attack()

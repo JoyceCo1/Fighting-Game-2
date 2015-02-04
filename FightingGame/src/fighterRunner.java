@@ -8,6 +8,7 @@ public class fighterRunner
 		{
 		characterFill();
 		characterChoice();
+		combat();
 		}
 	
 	
@@ -43,7 +44,7 @@ public class fighterRunner
 		fighter[choice - 1].counter();
 		fighter[choice - 1].ability();
 		System.out.println("Are you sure you want to play as this fighter?");
-		System.out.print("Y or N");
+		System.out.println("Y or N");
 		String yesOrNo = input.next();
 		if(yesOrNo.equals("N"))
 			{
@@ -149,9 +150,10 @@ public class fighterRunner
 		boolean playerCounter = false;
 		int playerEnergy = 3;
 		int compEnergy = 3;
+		boolean exit = false;
 		Scanner input = new Scanner(System.in);
-		int choice = input.nextInt();
 		System.out.println("What would you like to do? \n(1) Attack \n(2) Attempt to Counter  \n(3) Special Ability");
+		int choice = input.nextInt();
 		switch(choice)
 		{
 		case 1:
@@ -159,14 +161,16 @@ public class fighterRunner
 			if(compHittable == true)
 				{
 				compHealth = compHealth - playerAttack;
+				characterData.character.get(enemy).setHealth(compHealth);
 				System.out.println(playerName + " has hit " + compName + " for " + playerAttack + " health " + compName + " now has " + compHealth + " health left!");
 				}
 			else if(compCounter == true)
 				{
 				playerHealth = playerHealth - playerAttack - compAttack;
+				characterData.character.get(player).setHealth(playerHealth);
 				System.out.println("The enemy has countered your attack, dealing your own damage, and theirs back onto you");
-				compCounter = false;
-				compHittable = true;
+				characterData.character.get(enemy).setCounter(false);
+				characterData.character.get(enemy).setHittable(true);
 				}
 			break;
 			}
@@ -185,8 +189,71 @@ public class fighterRunner
 			else
 				{
 				fighter[characterData.character.get(0).getLocation()].ability();
+				playerEnergy = playerEnergy - 1;
 				}
+			break;
 			}
 		}
+		if((playerHealth > 0) && (compHealth > 0))
+			{
+			combat();
+			}
+		else if(playerHealth <= 0)
+			{
+			while(exit == false)
+				{
+				System.out.println("YOU HAVE BEEN DEFEATED");
+				System.out.println("WOULD YOU LIKE TO PLAY AGAIN? \n(1) TO PLAY AGAIN \n(2) TO EXIT THE GAME");
+				Scanner keyboard = new Scanner(System.in);
+				int playAgain = keyboard.nextInt();
+				if(playAgain == 1)
+					{
+					characterClear();
+					characterFill();
+					characterChoice();
+					combat();
+					}
+				else if(playAgain == 2)
+					{
+					System.out.println("THANK YOU FOR PLAYING");
+					exit = true;
+					}
+				else
+					{
+					System.out.println("PLEASE SELECT 1 OR 2");
+					}
+				}
+			}
+		else if(compHealth <= 0)
+			{
+			while(exit == false)
+				{
+				System.out.println("YOU HAVE BEATEN YOUR ENEMY");
+				System.out.println("WOULD YOU LIKE TO PLAY AGAIN? \n(1) TO PLAY AGAIN \n(2) TO EXIT THE GAME");
+				Scanner keyboard = new Scanner(System.in);
+				int playAgain = keyboard.nextInt();
+				if(playAgain == 1)
+					{
+                    characterClear();
+					characterFill();
+					characterChoice();
+					combat();
+					}
+				else if(playAgain == 2)
+					{
+					System.out.println("THANK YOU FOR PLAYING");
+					exit = true;
+					}
+				else
+					{
+					System.out.println("PLEASE SELECT 1 OR 2");
+					}
+				}
+			}
 	}
+	public static void characterClear()
+		{
+		characterData.character.remove(0);
+		characterData.character.remove(0);
+		}
 }

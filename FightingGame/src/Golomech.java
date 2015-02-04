@@ -17,7 +17,7 @@ public class Golomech extends Tank
 	
 	public static void fill()
 		{
-		characterData.character.add(new characterData ("Golomech", 50, 500, true, 3));
+		characterData.character.add(new characterData ("Golomech", 50, 500, true, 3, false));
 		}
 	
 	public void attack()
