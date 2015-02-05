@@ -17,7 +17,7 @@ public class Bruce extends Tank
 	
 	public static void fill()
 		{
-		characterData.character.add(new characterData ("Bruce", 50, 500, true, 2, false));
+		characterData.character.add(new characterData ("Bruce", 50, 500, true, 2, false, 1, false));
 		}
 	
 	public void attack()

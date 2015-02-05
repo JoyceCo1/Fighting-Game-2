@@ -134,119 +134,257 @@ public class fighterRunner
 				}
 			}
 		System.out.println("Your opponent will be " + characterData.character.get(enemy).getName());
+		if(characterData.character.get(enemy).getSpeed() > characterData.character.get(player).getSpeed())
+			{
+			characterData.character.get(enemy).setTurn(true);
+			}
+		else
+			{
+			characterData.character.get(player).setTurn(true);
+			}
 		}
 	
 	public static void combat()
 		{
+		//to make it alternate between turns, change the arraylist value not the variable
+		//something is up with the random choice generator 
+		//counter isn't doing damage back
 		int playerHealth = characterData.character.get(player).getHealth();
 		int playerAttack = characterData.character.get(player).getAttack();
 		String playerName = characterData.character.get(player).getName();
 		int compHealth = characterData.character.get(enemy).getHealth();
-		int compAttack = characterData.character.get(enemy).getHealth();
+		int compAttack = characterData.character.get(enemy).getAttack();
 		String compName = characterData.character.get(enemy).getName();
 		boolean compHittable = characterData.character.get(enemy).getHittable();
 		boolean playerHittable = characterData.character.get(player).getHittable();
+		boolean playerTurn = characterData.character.get(player).getTurn();
+		boolean compTurn = characterData.character.get(enemy).getTurn();
 		boolean compCounter = false;
 		boolean playerCounter = false;
+		int enemyChoice = (int)(Math.random()*3+1);
 		int playerEnergy = 3;
 		int compEnergy = 3;
 		boolean exit = false;
-		Scanner input = new Scanner(System.in);
-		System.out.println("What would you like to do? \n(1) Attack \n(2) Attempt to Counter  \n(3) Special Ability");
-		int choice = input.nextInt();
-		switch(choice)
-		{
-		case 1:
+		if(playerTurn == true)
 			{
-			if(compHittable == true)
-				{
-				compHealth = compHealth - playerAttack;
-				characterData.character.get(enemy).setHealth(compHealth);
-				System.out.println(playerName + " has hit " + compName + " for " + playerAttack + " health " + compName + " now has " + compHealth + " health left!");
-				}
-			else if(compCounter == true)
-				{
-				playerHealth = playerHealth - playerAttack - compAttack;
-				characterData.character.get(player).setHealth(playerHealth);
-				System.out.println("The enemy has countered your attack, dealing your own damage, and theirs back onto you");
-				characterData.character.get(enemy).setCounter(false);
-				characterData.character.get(enemy).setHittable(true);
-				}
-			break;
-			}
-		case 2: 
+			Scanner input = new Scanner(System.in);
+			System.out.println("What would you like to do? \n(1) Attack \n(2) Attempt to Counter  \n(3) Special Ability");
+			int choice = input.nextInt();
+			switch(choice)
 			{
-			playerCounter = true;
-			System.out.println("You prepare to counter the opponent's attack");
-			break;
-			}
-		case 3: 
-			{
-			if(playerEnergy == 0)
+			case 1:
 				{
-				System.out.println("I'm sorry you don't have enough energy to cast your ability again.");
-				}
-			else
-				{
-				fighter[characterData.character.get(0).getLocation()].ability();
-				playerEnergy = playerEnergy - 1;
-				}
-			break;
-			}
-		}
-		if((playerHealth > 0) && (compHealth > 0))
-			{
-			combat();
-			}
-		else if(playerHealth <= 0)
-			{
-			while(exit == false)
-				{
-				System.out.println("YOU HAVE BEEN DEFEATED");
-				System.out.println("WOULD YOU LIKE TO PLAY AGAIN? \n(1) TO PLAY AGAIN \n(2) TO EXIT THE GAME");
-				Scanner keyboard = new Scanner(System.in);
-				int playAgain = keyboard.nextInt();
-				if(playAgain == 1)
+				if(compHittable == true)
 					{
-					characterClear();
-					characterFill();
-					characterChoice();
-					combat();
+					compHealth = compHealth - playerAttack;
+					characterData.character.get(enemy).setHealth(compHealth);
+					System.out.println(playerName + " has hit " + compName + " for " + playerAttack + " health " + compName + " now has " + compHealth + " health left!");
+					characterData.character.get(0).setTurn(false);
+					characterData.character.get(1).setTurn(true);
 					}
-				else if(playAgain == 2)
+				else if(compCounter == true)
 					{
-					System.out.println("THANK YOU FOR PLAYING");
-					exit = true;
+					playerHealth = playerHealth - playerAttack - compAttack;
+					characterData.character.get(player).setHealth(playerHealth);
+					System.out.println("The enemy has countered your attack, dealing your own damage, and theirs back onto you");
+					characterData.character.get(enemy).setCounter(false);
+					characterData.character.get(enemy).setHittable(true);
+					characterData.character.get(0).setTurn(false);
+					characterData.character.get(1).setTurn(true);
+					}
+				break;
+				}
+			case 2: 
+				{
+				characterData.character.get(0).setCounter(true);
+				System.out.println("You prepare to counter the opponent's attack");
+				characterData.character.get(0).setTurn(false);
+				characterData.character.get(1).setTurn(true);
+				break;
+				}
+			case 3: 
+				{
+				if(playerEnergy == 0)
+					{
+					System.out.println("I'm sorry you don't have enough energy to cast your ability again.");
+					characterData.character.get(0).setTurn(false);
+					characterData.character.get(1).setTurn(true);
 					}
 				else
 					{
-					System.out.println("PLEASE SELECT 1 OR 2");
+					fighter[characterData.character.get(0).getLocation()].ability();
+					playerEnergy = playerEnergy - 1;
+					characterData.character.get(0).setTurn(false);
+					characterData.character.get(1).setTurn(true);
+					}
+				break;
+				}
+			}
+			if((playerHealth > 0) && (compHealth > 0))
+				{
+				combat();
+				}
+			else if(playerHealth <= 0)
+				{
+				while(exit == false)
+					{
+					System.out.println("YOU HAVE BEEN DEFEATED");
+					System.out.println("WOULD YOU LIKE TO PLAY AGAIN? \n(1) TO PLAY AGAIN \n(2) TO EXIT THE GAME");
+					Scanner keyboard = new Scanner(System.in);
+					int playAgain = keyboard.nextInt();
+					if(playAgain == 1)
+						{
+						characterClear();
+						characterFill();
+						characterChoice();
+						combat();
+						}
+					else if(playAgain == 2)
+						{
+						System.out.println("THANK YOU FOR PLAYING");
+						exit = true;
+						}
+					else
+						{
+						System.out.println("PLEASE SELECT 1 OR 2");
+						}
+					}
+				}
+			else if(compHealth <= 0)
+				{
+				while(exit == false)
+					{
+					System.out.println("YOU HAVE BEATEN YOUR ENEMY");
+					System.out.println("WOULD YOU LIKE TO PLAY AGAIN? \n(1) TO PLAY AGAIN \n(2) TO EXIT THE GAME");
+					Scanner keyboard = new Scanner(System.in);
+					int playAgain = keyboard.nextInt();
+					if(playAgain == 1)
+						{
+	                    characterClear();
+						characterFill();
+						characterChoice();
+						combat();
+						}
+					else if(playAgain == 2)
+						{
+						System.out.println("THANK YOU FOR PLAYING");
+						exit = true;
+						}
+					else
+						{
+						System.out.println("PLEASE SELECT 1 OR 2");
+						}
 					}
 				}
 			}
-		else if(compHealth <= 0)
+		else
 			{
-			while(exit == false)
+			switch(enemyChoice)
+			{
+			case 1:
 				{
-				System.out.println("YOU HAVE BEATEN YOUR ENEMY");
-				System.out.println("WOULD YOU LIKE TO PLAY AGAIN? \n(1) TO PLAY AGAIN \n(2) TO EXIT THE GAME");
-				Scanner keyboard = new Scanner(System.in);
-				int playAgain = keyboard.nextInt();
-				if(playAgain == 1)
+				if(playerHittable == true)
 					{
-                    characterClear();
-					characterFill();
-					characterChoice();
-					combat();
+					playerHealth = playerHealth - compAttack;
+					characterData.character.get(player).setHealth(playerHealth);
+					System.out.println(compName + " has hit " + playerName + " for " + compAttack + " health " + playerName + " now has " + playerHealth + " health left!");
+					characterData.character.get(1).setTurn(false);
+					characterData.character.get(0).setTurn(true);
 					}
-				else if(playAgain == 2)
+				else if(playerCounter == true)
 					{
-					System.out.println("THANK YOU FOR PLAYING");
-					exit = true;
+					compHealth = compHealth - compAttack - playerAttack;
+					characterData.character.get(enemy).setHealth(compHealth);
+					System.out.println("You have countered the enemy attack, dealing their own damage and yours back to them");
+					characterData.character.get(player).setCounter(false);
+					characterData.character.get(player).setHittable(true);
+					characterData.character.get(1).setTurn(false);
+					characterData.character.get(0).setTurn(true);
+					}
+				break;
+				}
+			case 2: 
+				{
+				compCounter = true;
+				System.out.println("The opponent takes a defensive stance");
+				characterData.character.get(1).setTurn(false);
+				characterData.character.get(0).setTurn(true);
+				break;
+				}
+			case 3: 
+				{
+				if(compEnergy == 0)
+					{
+					System.out.println("The enemy failed to use their ability");
+					characterData.character.get(1).setTurn(false);
+					characterData.character.get(0).setTurn(true);
 					}
 				else
 					{
-					System.out.println("PLEASE SELECT 1 OR 2");
+					fighter[characterData.character.get(1).getLocation()].ability();
+					compEnergy = compEnergy - 1;
+					characterData.character.get(1).setTurn(false);
+					characterData.character.get(0).setTurn(true);
+					}
+				break;
+				}
+			}
+			if((playerHealth > 0) && (compHealth > 0))
+				{
+				playerTurn = true;
+				compTurn = false;
+				combat();
+				}
+			else if(playerHealth <= 0)
+				{
+				while(exit == false)
+					{
+					System.out.println("YOU HAVE BEEN DEFEATED");
+					System.out.println("WOULD YOU LIKE TO PLAY AGAIN? \n(1) TO PLAY AGAIN \n(2) TO EXIT THE GAME");
+					Scanner keyboard = new Scanner(System.in);
+					int playAgain = keyboard.nextInt();
+					if(playAgain == 1)
+						{
+						characterClear();
+						characterFill();
+						characterChoice();
+						combat();
+						}
+					else if(playAgain == 2)
+						{
+						System.out.println("THANK YOU FOR PLAYING");
+						exit = true;
+						}
+					else
+						{
+						System.out.println("PLEASE SELECT 1 OR 2");
+						}
+					}
+				}
+			else if(compHealth <= 0)
+				{
+				while(exit == false)
+					{
+					System.out.println("YOU HAVE BEATEN YOUR ENEMY");
+					System.out.println("WOULD YOU LIKE TO PLAY AGAIN? \n(1) TO PLAY AGAIN \n(2) TO EXIT THE GAME");
+					Scanner keyboard = new Scanner(System.in);
+					int playAgain = keyboard.nextInt();
+					if(playAgain == 1)
+						{
+	                    characterClear();
+						characterFill();
+						characterChoice();
+						combat();
+						}
+					else if(playAgain == 2)
+						{
+						System.out.println("THANK YOU FOR PLAYING");
+						exit = true;
+						}
+					else
+						{
+						System.out.println("PLEASE SELECT 1 OR 2");
+						}
 					}
 				}
 			}

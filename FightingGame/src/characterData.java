@@ -9,7 +9,9 @@ public class characterData
 	boolean hittable;
 	int location;
 	boolean counter;
-	public characterData(String n, int a, int h, boolean hit, int l, boolean c)
+	int speed;
+	boolean turn;
+	public characterData(String n, int a, int h, boolean hit, int l, boolean c, int s, boolean t)
 		{
 		Name = n;
 		attack = a; 
@@ -17,6 +19,8 @@ public class characterData
 		hittable = hit;
 		location = l;
 		counter = c;
+		speed = s;
+		turn = t;
 		}
 
 	public String getName()
@@ -43,6 +47,14 @@ public class characterData
 		{
 		return counter;
 		}
+	public int getSpeed()
+		{
+		return speed;
+		}
+	public boolean getTurn()
+		{
+		return turn;
+		}
 	public void setName(String name)
 		{
 		this.Name = name;
@@ -62,6 +74,14 @@ public class characterData
 	public void setCounter(boolean counter)
 		{
 		this.counter = counter;
+		}
+	public void setSpeed(int speed)
+		{
+		this.speed = speed;
+		}
+	public void setTurn(boolean turn)
+		{
+		this.turn = turn;
 		}
 	
 	static ArrayList <characterData> character = new ArrayList<characterData>();
