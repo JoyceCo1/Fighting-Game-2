@@ -1,5 +1,5 @@
 
 public interface finisher {
-	public abstract void finalStrike();
+	public abstract void finisher();
 
 }

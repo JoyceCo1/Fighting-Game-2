@@ -11,7 +11,9 @@ public class characterData
 	boolean counter;
 	int speed;
 	boolean turn;
-	public characterData(String n, int a, int h, boolean hit, int l, boolean c, int s, boolean t)
+	int energy;
+
+	public characterData(String n, int a, int h, boolean hit, int l, boolean c, int s, boolean t, int e)
 		{
 		Name = n;
 		attack = a; 
@@ -21,6 +23,7 @@ public class characterData
 		counter = c;
 		speed = s;
 		turn = t;
+		energy = e;
 		}
 
 	public String getName()
@@ -55,6 +58,11 @@ public class characterData
 		{
 		return turn;
 		}
+	public int getEnergy()
+		{
+		return energy;
+		}
+
 	public void setName(String name)
 		{
 		this.Name = name;
@@ -83,6 +91,11 @@ public class characterData
 		{
 		this.turn = turn;
 		}
+	public void setEnergy(int energy)
+		{
+		this.energy = energy;
+		}
+
 	
 	static ArrayList <characterData> character = new ArrayList<characterData>();
 

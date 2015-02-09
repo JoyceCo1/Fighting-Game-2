@@ -3,8 +3,22 @@ public class Sahira extends Assassin
 {
 	public Sahira()
 	{
-		myFinisher = (finisher) new yesFinisher();
+	enemyFinisher = (finisher) new cantFinish();
+	playerFinisher = (finisher) new cantFinish();	
 	}
+	
+	public void playerFinalStrike()
+		{
+		System.out.println("Golomech drops his entire body onto the enemy, dealing massive damage.");
+		characterData.character.get(0).setAttack(900);
+		}
+	
+	public void enemyFinalStrike()
+		{
+		System.out.println("Golomech uses his entire body to fight");
+		characterData.character.get(1).setAttack(900);
+		}
+	
 	public void ability()
 	{
 		System.out.println("Sahira's special move stops other fighters from hitting her, then she attacks back for double damage");
@@ -23,7 +37,7 @@ public class Sahira extends Assassin
 	
 	public static void fill()
 		{
-		characterData.character.add(new characterData ("Sahira", 200, 250, true, 0, false, 3, false));
+		characterData.character.add(new characterData ("Sahira", 200, 250, true, 0, false, 3, false, 1));
 		}
 	
 	public void attack()

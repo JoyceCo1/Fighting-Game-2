@@ -159,11 +159,11 @@ public class fighterRunner
 		boolean playerHittable = characterData.character.get(player).getHittable();
 		boolean playerTurn = characterData.character.get(player).getTurn();
 		boolean compTurn = characterData.character.get(enemy).getTurn();
-		boolean compCounter = false;
-		boolean playerCounter = false;
+		boolean compCounter = characterData.character.get(enemy).getCounter();
+		boolean playerCounter = characterData.character.get(player).getCounter();
 		int enemyChoice = (int)(Math.random()*3+1);
-		int playerEnergy = 3;
-		int compEnergy = 3;
+		int playerEnergy = characterData.character.get(player).getEnergy();
+		int compEnergy = characterData.character.get(enemy).getEnergy();
 		boolean exit = false;
 		if(playerTurn == true)
 			{
@@ -174,7 +174,7 @@ public class fighterRunner
 			{
 			case 1:
 				{
-				if(compHittable == true)
+				if(compCounter == false)
 					{
 					compHealth = compHealth - playerAttack;
 					characterData.character.get(enemy).setHealth(compHealth);
@@ -186,7 +186,7 @@ public class fighterRunner
 					{
 					playerHealth = playerHealth - playerAttack - compAttack;
 					characterData.character.get(player).setHealth(playerHealth);
-					System.out.println("The enemy has countered your attack, dealing your own damage, and theirs back onto you");
+					System.out.println("The enemy has countered your attack, dealing your own damage, and theirs back onto you \nYou now have " + playerHealth + " health.");
 					characterData.character.get(enemy).setCounter(false);
 					characterData.character.get(enemy).setHittable(true);
 					characterData.character.get(0).setTurn(false);
@@ -212,8 +212,8 @@ public class fighterRunner
 					}
 				else
 					{
-					fighter[characterData.character.get(0).getLocation()].ability();
-					playerEnergy = playerEnergy - 1;
+					fighter[characterData.character.get(player).getLocation()].playerFinisher.finisher();
+					characterData.character.get(player).setEnergy(playerEnergy - 1);
 					characterData.character.get(0).setTurn(false);
 					characterData.character.get(1).setTurn(true);
 					}
@@ -283,7 +283,7 @@ public class fighterRunner
 			{
 			case 1:
 				{
-				if(playerHittable == true)
+				if(playerCounter == false)
 					{
 					playerHealth = playerHealth - compAttack;
 					characterData.character.get(player).setHealth(playerHealth);
@@ -295,7 +295,7 @@ public class fighterRunner
 					{
 					compHealth = compHealth - compAttack - playerAttack;
 					characterData.character.get(enemy).setHealth(compHealth);
-					System.out.println("You have countered the enemy attack, dealing their own damage and yours back to them");
+					System.out.println("You have countered the enemy attack, dealing their own damage and yours back to them \nThey now have " + compHealth + " health.");
 					characterData.character.get(player).setCounter(false);
 					characterData.character.get(player).setHittable(true);
 					characterData.character.get(1).setTurn(false);
@@ -305,7 +305,7 @@ public class fighterRunner
 				}
 			case 2: 
 				{
-				compCounter = true;
+				characterData.character.get(enemy).setCounter(true);
 				System.out.println("The opponent takes a defensive stance");
 				characterData.character.get(1).setTurn(false);
 				characterData.character.get(0).setTurn(true);
@@ -321,8 +321,8 @@ public class fighterRunner
 					}
 				else
 					{
-					fighter[characterData.character.get(1).getLocation()].ability();
-					compEnergy = compEnergy - 1;
+					fighter[characterData.character.get(enemy).getLocation()].enemyFinisher.finisher();
+					characterData.character.get(1).setEnergy(compEnergy - 1);
 					characterData.character.get(1).setTurn(false);
 					characterData.character.get(0).setTurn(true);
 					}

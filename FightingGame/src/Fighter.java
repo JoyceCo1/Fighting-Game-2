@@ -7,7 +7,8 @@ public abstract class Fighter {
 	int health;
 	protected int Ability;
 	protected int Counter;
-	protected finisher myFinisher;
+	protected finisher playerFinisher;
+	protected finisher enemyFinisher;
 
 	
 	public void counter()
@@ -32,7 +33,6 @@ public abstract class Fighter {
 	public abstract void name();
 
 	public abstract void attack();
-	
 	
 	
 
