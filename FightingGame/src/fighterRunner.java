@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.*;
 public class fighterRunner
 	{
 	static int player = 0;
@@ -32,70 +33,85 @@ public class fighterRunner
 		System.out.println("(4) Golomech - a Tank");
 		System.out.println("(5) Shyra    - a Bruiser");
 		System.out.println("(6) Auriel   - a Bruiser");
-		int choice = input.nextInt();
-		if(choice>6)
+		if(input.hasNextInt())
 			{
-			System.out.println("Please select one of the fighters");
-			characterChoice();
-			}
-		fighter[choice - 1].name();
-		fighter[choice - 1].attack();
-		fighter[choice - 1].fight();
-		fighter[choice - 1].counter();
-		fighter[choice - 1].ability();
-		System.out.println("Are you sure you want to play as this fighter?");
-		System.out.println("Y or N");
-		String yesOrNo = input.next();
-		if(yesOrNo.equals("N"))
-			{
-			characterChoice();
-			}
-		if(yesOrNo.equals("Y"))
-			{
-			int playerCheck = choice;
-			switch(playerCheck)
+			int choice = input.nextInt();
+			if((choice < 7) || (choice > 0))
 				{
-				case 1: 
+				fighter[choice - 1].name();
+				fighter[choice - 1].attack();
+				fighter[choice - 1].fight();
+				fighter[choice - 1].counter();
+				fighter[choice - 1].ability();
+				System.out.println("Are you sure you want to play as this fighter?");
+				System.out.println("Y or N");
+				if(input.hasNext())
 					{
-					Sahira.fill();
-					break;
+					String yesOrNo = input.next();
+					if(yesOrNo.equals("N") || yesOrNo.equals("n"))
+						{
+						characterChoice();
+						}
+					else if(yesOrNo.equals("Y") || yesOrNo.equals("y"))
+						{
+						int playerCheck = choice;
+						switch(playerCheck)
+							{
+							case 1: 
+								{
+								Sahira.fill();
+								break;
+								}
+							case 2: 
+								{
+								Lucaror.fill();
+								break;
+								}
+							case 3: 
+								{
+								Bruce.fill();
+								break;
+								}
+							case 4: 
+								{
+								Golomech.fill();
+								break;
+								}
+							case 5: 
+								{
+								Shyra.fill();
+								break;
+								}
+							case 6: 
+								{
+								Auriel.fill();
+								break;
+								}
+							}
+						System.out.println("You are playing " + characterData.character.get(player).getName());
+						enemyFill();
+						}
+					else
+						{
+						System.out.println("Please select a character");
+						characterChoice();
+						}
 					}
-				case 2: 
-					{
-					Lucaror.fill();
-					break;
-					}
-				case 3: 
-					{
-					Bruce.fill();
-					break;
-					}
-				case 4: 
-					{
-					Golomech.fill();
-					break;
-					}
-				case 5: 
-					{
-					Shyra.fill();
-					break;
-					}
-				case 6: 
-					{
-					Auriel.fill();
-					break;
-					}
+					else
+						{
+						System.out.println("Please answer Y or N.");
+						characterChoice();
+						}
 				}
-			System.out.println("You are playing " + characterData.character.get(player).getName());
-			enemyFill();
 			}
 		else
 			{
-			System.out.println("Please select a character");
+			System.out.println("Please enter an int");
+			characterFill();
 			characterChoice();
+			combat();
 			}
-
-		}
+	}
 	public static void enemyFill()
 		{
 		int enemyChoice = (int)(Math.random()*6 + 1);
@@ -146,9 +162,7 @@ public class fighterRunner
 	
 	public static void combat()
 		{
-		//to make it alternate between turns, change the arraylist value not the variable
-		//something is up with the random choice generator 
-		//counter isn't doing damage back
+		//create an empty int up here for the players, set it as abilityCount, have it check each turn, if its changed, revert the attack damage
 		int playerHealth = characterData.character.get(player).getHealth();
 		int playerAttack = characterData.character.get(player).getAttack();
 		String playerName = characterData.character.get(player).getName();
@@ -176,7 +190,7 @@ public class fighterRunner
 				{
 				if(compCounter == false)
 					{
-					compHealth = compHealth - playerAttack;
+					compHealth = enemyHealthLoss(compHealth, playerAttack);
 					characterData.character.get(enemy).setHealth(compHealth);
 					System.out.println(playerName + " has hit " + compName + " for " + playerAttack + " health " + compName + " now has " + compHealth + " health left!");
 					characterData.character.get(0).setTurn(false);
@@ -184,7 +198,7 @@ public class fighterRunner
 					}
 				else if(compCounter == true)
 					{
-					playerHealth = playerHealth - playerAttack - compAttack;
+					playerHealth = playerGotCountered(playerHealth, playerAttack, compAttack);
 					characterData.character.get(player).setHealth(playerHealth);
 					System.out.println("The enemy has countered your attack, dealing your own damage, and theirs back onto you \nYou now have " + playerHealth + " health.");
 					characterData.character.get(enemy).setCounter(false);
@@ -285,7 +299,7 @@ public class fighterRunner
 				{
 				if(playerCounter == false)
 					{
-					playerHealth = playerHealth - compAttack;
+					playerHealth = playerHealthLoss(playerHealth, compAttack);
 					characterData.character.get(player).setHealth(playerHealth);
 					System.out.println(compName + " has hit " + playerName + " for " + compAttack + " health " + playerName + " now has " + playerHealth + " health left!");
 					characterData.character.get(1).setTurn(false);
@@ -293,7 +307,7 @@ public class fighterRunner
 					}
 				else if(playerCounter == true)
 					{
-					compHealth = compHealth - compAttack - playerAttack;
+					compHealth = enemyGotCountered(compHealth, compAttack, playerAttack);
 					characterData.character.get(enemy).setHealth(compHealth);
 					System.out.println("You have countered the enemy attack, dealing their own damage and yours back to them \nThey now have " + compHealth + " health.");
 					characterData.character.get(player).setCounter(false);
@@ -389,9 +403,33 @@ public class fighterRunner
 				}
 			}
 	}
+	public static int playerHealthLoss(int playerHealth, int enemyDamage)
+		{
+		playerHealth = playerHealth - enemyDamage;
+		return playerHealth;
+		}
+	
+	public static int enemyHealthLoss(int enemyHealth, int playerDamage)
+		{
+		enemyHealth = enemyHealth - playerDamage;
+		return enemyHealth;
+		}
+	
+	public static int playerGotCountered(int playerHealth, int playerDamage, int enemyDamage)
+		{
+		playerHealth = playerHealth - (playerDamage + enemyDamage);
+		return playerHealth;
+		}
+	
+	public static int enemyGotCountered(int enemyHealth, int playerDamage, int enemyDamage)
+		{
+		enemyHealth = enemyHealth - (playerDamage + enemyDamage);
+		return enemyHealth;
+		}
 	public static void characterClear()
 		{
 		characterData.character.remove(0);
 		characterData.character.remove(0);
 		}
+
 }
