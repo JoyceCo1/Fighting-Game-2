@@ -12,8 +12,9 @@ public class characterData
 	int speed;
 	boolean turn;
 	int energy;
+	int turnChecker;
 
-	public characterData(String n, int a, int h, boolean hit, int l, boolean c, int s, boolean t, int e)
+	public characterData(String n, int a, int h, boolean hit, int l, boolean c, int s, boolean t, int e, int tc)
 		{
 		Name = n;
 		attack = a; 
@@ -24,6 +25,7 @@ public class characterData
 		speed = s;
 		turn = t;
 		energy = e;
+		turnChecker = tc;
 		}
 
 	public String getName()
@@ -62,6 +64,10 @@ public class characterData
 		{
 		return energy;
 		}
+	public int getTurnChecker()
+		{
+		return turnChecker;
+		}
 
 	public void setName(String name)
 		{
@@ -94,6 +100,10 @@ public class characterData
 	public void setEnergy(int energy)
 		{
 		this.energy = energy;
+		}
+	public void setTurnChecker(int turnChecker)
+		{
+		this.turnChecker = turnChecker;
 		}
 
 	

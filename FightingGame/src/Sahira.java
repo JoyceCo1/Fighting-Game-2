@@ -37,12 +37,22 @@ public class Sahira extends Assassin
 	
 	public static void fill()
 		{
-		characterData.character.add(new characterData ("Sahira", 200, 250, true, 0, false, 3, false, 1));
+		characterData.character.add(new characterData ("Sahira", 200, 250, true, 0, false, 3, false, 1, 0));
 		}
 	
 	public void attack()
 		{
 		System.out.println("This character's attack is " + 200);
+		}
+	
+	public void health()
+		{
+		System.out.println("Sahira's health is 250");
+		}
+	
+	public void ifFinisher()
+		{
+		System.out.println("Sahira can't channel her rage into one super attack");
 		}
 	
 

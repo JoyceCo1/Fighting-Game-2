@@ -18,7 +18,7 @@ public abstract class Fighter {
 	
 	public void fight()
 	{
-		System.out.println("The fighter's main strenght comes from their ability to fight");
+		System.out.println("The fighter's main strength comes from their combat prowess");
 	}
 	
 	public abstract void ability();
@@ -34,6 +34,10 @@ public abstract class Fighter {
 
 	public abstract void attack();
 	
+	public abstract void health();
+	
+	public abstract void ifFinisher();
+		
 	
 
 	

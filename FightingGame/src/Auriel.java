@@ -31,12 +31,22 @@ public class Auriel extends Bruiser
 	
 	public static void fill()
 		{
-		characterData.character.add(new characterData ("Auriel", 100, 350, true, 5, false, 2, false, 1));
+		characterData.character.add(new characterData ("Auriel", 100, 350, true, 5, false, 2, false, 1, 0));
 		}
 	
 	public void attack()
 		{
 		System.out.println("This character's attack is " + 100);
+		}
+	
+	public void ifFinisher()
+		{
+		System.out.println("Auriel can't channel her rage into one super attack");
+		}
+	
+	public void health()
+		{
+		System.out.println("Auriel's health is 350");
 		}
 	
 	

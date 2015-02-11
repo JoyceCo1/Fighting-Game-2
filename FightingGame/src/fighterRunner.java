@@ -4,6 +4,8 @@ public class fighterRunner
 	{
 	static int player = 0;
 	static int enemy = 1;
+	static int playerOriginalAttack = 0; 
+	static int enemyOriginalAttack = 0;
 	static Fighter [] fighter = new Fighter [6];
 	public static void main(String[] args)
 		{
@@ -40,9 +42,10 @@ public class fighterRunner
 				{
 				fighter[choice - 1].name();
 				fighter[choice - 1].attack();
+				fighter[choice - 1].health();
+				fighter[choice - 1].ifFinisher();
 				fighter[choice - 1].fight();
 				fighter[choice - 1].counter();
-				fighter[choice - 1].ability();
 				System.out.println("Are you sure you want to play as this fighter?");
 				System.out.println("Y or N");
 				if(input.hasNext())
@@ -150,6 +153,8 @@ public class fighterRunner
 				}
 			}
 		System.out.println("Your opponent will be " + characterData.character.get(enemy).getName());
+		playerOriginalAttack = characterData.character.get(player).getAttack();
+		enemyOriginalAttack = characterData.character.get(enemy).getAttack();
 		if(characterData.character.get(enemy).getSpeed() > characterData.character.get(player).getSpeed())
 			{
 			characterData.character.get(enemy).setTurn(true);
@@ -162,7 +167,8 @@ public class fighterRunner
 	
 	public static void combat()
 		{
-		//create an empty int up here for the players, set it as abilityCount, have it check each turn, if its changed, revert the attack damage
+		int playerTurnCheck = characterData.character.get(player).getTurnChecker();
+		int enemyTurnCheck = characterData.character.get(enemy).getTurnChecker();
 		int playerHealth = characterData.character.get(player).getHealth();
 		int playerAttack = characterData.character.get(player).getAttack();
 		String playerName = characterData.character.get(player).getName();
@@ -179,6 +185,8 @@ public class fighterRunner
 		int playerEnergy = characterData.character.get(player).getEnergy();
 		int compEnergy = characterData.character.get(enemy).getEnergy();
 		boolean exit = false;
+		int playerCheckerAdd = 0; 
+		int enemyCheckerAdd = 0; 
 		if(playerTurn == true)
 			{
 			Scanner input = new Scanner(System.in);
@@ -230,12 +238,23 @@ public class fighterRunner
 					characterData.character.get(player).setEnergy(playerEnergy - 1);
 					characterData.character.get(0).setTurn(false);
 					characterData.character.get(1).setTurn(true);
+					playerCheckerAdd++;
 					}
 				break;
 				}
 			}
 			if((playerHealth > 0) && (compHealth > 0))
 				{
+				if(characterData.character.get(0).getTurnChecker() != 0)
+					{
+					characterData.character.get(0).setTurnChecker(0);
+					System.out.println("Your attack has been reset, and is now back to " + playerOriginalAttack);
+					characterData.character.get(0).setAttack(playerOriginalAttack);
+					}
+				if(playerCheckerAdd != 0)
+					{
+					characterData.character.get(0).setTurnChecker(1);
+					}
 				combat();
 				}
 			else if(playerHealth <= 0)
@@ -329,22 +348,33 @@ public class fighterRunner
 				{
 				if(compEnergy == 0)
 					{
-					System.out.println("The enemy failed to use their ability");
+					System.out.println("The enemy tried to channel their rage again, but failed");
 					characterData.character.get(1).setTurn(false);
 					characterData.character.get(0).setTurn(true);
 					}
 				else
 					{
 					fighter[characterData.character.get(enemy).getLocation()].enemyFinisher.finisher();
-					characterData.character.get(1).setEnergy(compEnergy - 1);
+					characterData.character.get(enemy).setEnergy(compEnergy - 1);
 					characterData.character.get(1).setTurn(false);
 					characterData.character.get(0).setTurn(true);
+					enemyCheckerAdd++;
 					}
 				break;
 				}
 			}
 			if((playerHealth > 0) && (compHealth > 0))
 				{
+				if(characterData.character.get(1).getTurnChecker() != 0)
+					{
+					characterData.character.get(1).setTurnChecker(0);
+					System.out.println("The enemy's attack has been reset, and is now back to " + enemyOriginalAttack);
+					characterData.character.get(1).setAttack(enemyOriginalAttack);
+					}
+				if(enemyCheckerAdd != 0)
+					{
+					characterData.character.get(1).setTurnChecker(1);
+					}
 				playerTurn = true;
 				compTurn = false;
 				combat();
@@ -382,22 +412,29 @@ public class fighterRunner
 					System.out.println("YOU HAVE BEATEN YOUR ENEMY");
 					System.out.println("WOULD YOU LIKE TO PLAY AGAIN? \n(1) TO PLAY AGAIN \n(2) TO EXIT THE GAME");
 					Scanner keyboard = new Scanner(System.in);
-					int playAgain = keyboard.nextInt();
-					if(playAgain == 1)
+					if(keyboard.hasNextInt())
 						{
-	                    characterClear();
-						characterFill();
-						characterChoice();
-						combat();
-						}
-					else if(playAgain == 2)
-						{
-						System.out.println("THANK YOU FOR PLAYING");
-						exit = true;
+						int playAgain = keyboard.nextInt();
+						if(playAgain == 1)
+							{
+		                    characterClear();
+							characterFill();
+							characterChoice();
+							combat();
+							}
+						else if(playAgain == 2)
+							{
+							System.out.println("THANK YOU FOR PLAYING");
+							exit = true;
+							}
+						else
+							{
+							System.out.println("PLEASE SELECT 1 OR 2");
+							}
 						}
 					else
 						{
-						System.out.println("PLEASE SELECT 1 OR 2");
+						System.out.println("Please enter 1 or 2");
 						}
 					}
 				}

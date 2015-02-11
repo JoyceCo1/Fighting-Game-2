@@ -30,12 +30,20 @@ public class Lucaror extends Assassin
 	
 	public static void fill()
 		{
-		characterData.character.add(new characterData ("Lucaror", 200, 250, true, 1, false, 3, false, 1));
+		characterData.character.add(new characterData ("Lucaror", 200, 250, true, 1, false, 3, false, 1, 0));
 		}
 	
 	public void attack()
 		{
 		System.out.println("This character's attack is " + 200);
+		}
+	public void ifFinisher()
+		{
+		System.out.println("Lucaror can channel his rage into one super attack");
+		}
+	public void health()
+		{
+		System.out.println("Lucaror's health is 250");
 		}
 	
 

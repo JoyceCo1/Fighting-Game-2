@@ -25,12 +25,22 @@ public class Bruce extends Tank
 	
 	public static void fill()
 		{
-		characterData.character.add(new characterData ("Bruce", 50, 500, true, 2, false, 1, false, 1));
+		characterData.character.add(new characterData ("Bruce", 50, 500, true, 2, false, 1, false, 1, 0));
 		}
 	
 	public void attack()
 		{
 		System.out.println("This character's attack is " + 50);
+		}
+	
+	public void health()
+		{
+		System.out.println("Bruce's health is 500");
+		}
+	
+	public void ifFinisher()
+		{
+		System.out.println("Bruce can't channel his rage into one super attack");
 		}
 	
 

@@ -36,12 +36,22 @@ public class Shyra extends Bruiser
 	
 	public static void fill()
 		{
-		characterData.character.add(new characterData ("Shyra", 100, 350, true, 4, false, 2, false, 1));
+		characterData.character.add(new characterData ("Shyra", 100, 350, true, 4, false, 2, false, 1, 0));
 		}
 	
 	public void attack()
 		{
 		System.out.println("This character's attack is " + 100);
+		}
+	
+	public void ifFinisher()
+		{
+		System.out.println("Shyra can channel her rage into one super attack");
+		}
+	
+	public void health()
+		{
+		System.out.println("Shyra's health is 350");
 		}
 
 
